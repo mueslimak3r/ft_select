@@ -41,7 +41,8 @@ static void		sig_resize(int nb)
 	{
 		CLEAR_SCREEN;
 		GET_SCREENSIZE;
-		print_args();
+		if (check_argsize(args.args))
+			print_args();
 	}
 }
 

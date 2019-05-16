@@ -28,7 +28,7 @@ bool		check_argsize(t_arg *head)
 	if (size + 1 > window_size.ws_col)
 	{
 		CLEAR_SCREEN;
-		ft_putstr_fd("check argside: please resize the screen!\n",
+		ft_putstr_fd("check_argsize: please resize the screen!\n",
 		STDERR_FILENO);
 		return (false);
 	}
@@ -42,7 +42,7 @@ void		newcolumn(void)
 	if (terms.rows > window_size.ws_row)
 	{
 		CLEAR_SCREEN;
-		ft_putstr_fd("new column invalid, please resize the window!\n",
+		ft_putstr_fd("newcolumn failed, please resize the window!\n",
 		STDERR_FILENO);
 	}
 	else
