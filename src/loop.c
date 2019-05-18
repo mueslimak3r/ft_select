@@ -17,7 +17,15 @@ static void			select_arg(t_arg *args)
 	while (args)
 	{
 		if (args->underlined)
+		{
 			args->selected = args->selected ? false : true;
+			if (args->next)
+			{
+				args->underlined = false;
+				args->next->underlined = true;
+				break ;
+			}
+		}
 		if (args->is_last)
 			break ;
 		args = args->next;
@@ -43,32 +51,46 @@ static void			move_arg(unsigned long *c, t_arg *args)
 	}
 }
 
-static bool			del(int *status)
+static void			rm_arg(void)
 {
 	t_arg			*temp;
 
 	temp = args.args;
-	while (temp)
+	args.args = args.args->last;
+	args.args->is_last = temp->is_last ? true : args.args->is_last;
+	args.args->underlined = true;
+	args.args->next = temp->next;
+	temp->next->last = args.args;
+	temp->next = args.deleted;
+	temp->last = NULL;
+	args.deleted = temp;
+	while (args.args)
 	{
-		if (temp->underlined)
+		if (args.args->is_last)
+			break ;
+		args.args = args.args->next;
+	}
+}
+
+static bool			del(int *status)
+{
+	while (args.args)
+	{
+		if (args.args->underlined)
 		{
-			if (!args.args->last)
+			if (args.args == args.args->last)
 			{
 				*status = 0;
 				return (false);
 			}
-			args.args = args.args->last;
-			args.args->underlined = true;
-			args.args->next = temp->next;
-			temp->next->last = args.args;
-			temp->next = args.deleted;
-			temp->last = NULL;
-			args.deleted = temp;
-		}
-		if (temp->is_last)
+			rm_arg();
 			break ;
-		temp = temp->next;
+		}
+		if (args.args->is_last)
+			break ;
+		args.args = args.args->next;
 	}
+	args.args = args.args->next;
 	return (true);
 }
 
@@ -76,7 +98,6 @@ void				term_loop(int *status)
 {
 	unsigned long	c;
 
-	GET_SCREENSIZE;
 	if (check_argsize(args.args))
 		print_args();
 	while (1)

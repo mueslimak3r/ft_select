@@ -17,8 +17,8 @@ static void		sig_resume(int nb)
 	if (nb)
 	{
 		init_term();
+		set_sighandle();
 		CLEAR_SCREEN;
-		GET_SCREENSIZE;
 		if (check_argsize(args.args))
 			print_args();
 	}

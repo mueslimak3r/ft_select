@@ -18,6 +18,7 @@
 # include <termcap.h>
 # include <termios.h>
 # include "../libft/libft.h"
+# include <sys/stat.h>
 
 # define SPACE 0x20
 # define ENTER 0xA

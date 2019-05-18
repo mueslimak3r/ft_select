@@ -41,6 +41,7 @@ void		init_term(void)
 	tcsetattr(STDERR_FILENO, TCSANOW, &terms.new_term);
 	ft_putstr_fd(tgetstr("vi", &temp), STDERR_FILENO);
 	ft_putstr_fd(tgetstr("ti", &temp), STDERR_FILENO);
+	GET_SCREENSIZE;
 	terms.rows = 1;
 }
 

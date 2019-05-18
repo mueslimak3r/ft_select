@@ -12,7 +12,7 @@
 
 #include "../includes/ft_select.h"
 
-void		print_selected(t_arg *args)
+void			print_selected(t_arg *args)
 {
 	while (args)
 	{
@@ -28,12 +28,27 @@ void		print_selected(t_arg *args)
 	ft_putchar('\n');
 }
 
-void		printer(t_arg *arg)
+static void		choose_color(t_arg *arg)
 {
-	char	*underline;
-	char	buf[2048];
+	struct stat	info;
+
+	if (lstat(arg->name, &info) == -1)
+		ft_putstr_fd(C_WHITE, STDERR_FILENO);
+	else if (S_ISDIR(info.st_mode))
+		ft_putstr_fd(C_BLUE, STDERR_FILENO);
+	else if (S_ISLNK(info.st_mode))
+		ft_putstr_fd(C_MAGENTA, STDERR_FILENO);
+	else if (info.st_mode & S_IXUSR)
+		ft_putstr_fd(C_RED, STDERR_FILENO);
+}
+
+void			printer(t_arg *arg)
+{
+	char		*underline;
+	char		buf[2048];
 
 	underline = buf;
+	choose_color(arg);
 	if (arg->underlined)
 		ft_putstr_fd(tgetstr("us", &underline), STDERR_FILENO);
 	if (arg->selected)
@@ -43,5 +58,6 @@ void		printer(t_arg *arg)
 		ft_putstr_fd(tgetstr("ue", &underline), STDERR_FILENO);
 	if (arg->selected)
 		ft_putstr_fd(tgetstr("se", &underline), STDERR_FILENO);
+	ft_putstr_fd(C_WHITE, STDERR_FILENO);
 	ft_putchar_fd(' ', STDERR_FILENO);
 }

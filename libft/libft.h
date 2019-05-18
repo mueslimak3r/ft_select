@@ -16,7 +16,15 @@
 # include "ft_printf/includes/ft_printf.h"
 # include <unistd.h>
 # include <stdlib.h>
+
 # define BUFF_SIZE 200
+# define C_RED "\x1b[0;31m"
+# define C_GREEN "\x1b[0;32m"
+# define C_YELLOW "\x1b[0;33m"
+# define C_BLUE "\x1b[0;34m"
+# define C_MAGENTA "\x1b[0;35m"
+# define C_CYAN "\x1b[0;36m"
+# define C_WHITE  "\x1b[0m"
 
 typedef struct		s_list
 {
