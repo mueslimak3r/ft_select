@@ -39,6 +39,11 @@ void		init_term(void)
 	tcgetattr(STDERR_FILENO, &terms.new_term);
 	terms.new_term.c_lflag &= ~(ICANON | ECHO);
 	tcsetattr(STDERR_FILENO, TCSANOW, &terms.new_term);
+	if (!(tgetstr("vi", &temp)))
+	{
+		ft_putstr_fd("error: host terminal attr invalid\n", STDERR_FILENO);
+		exit (0);
+	}
 	ft_putstr_fd(tgetstr("vi", &temp), STDERR_FILENO);
 	ft_putstr_fd(tgetstr("ti", &temp), STDERR_FILENO);
 	GET_SCREENSIZE;
