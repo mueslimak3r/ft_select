@@ -63,7 +63,7 @@ int			main(int ac, char **av)
 	status = 1;
 	if (ac < 2 || !(validate_term()))
 		return (0);
-	init_args(ac, ++av);
+	init_args(++av);
 	init_term();
 	set_sighandle();
 	term_loop(&status);

@@ -92,14 +92,14 @@ static void	push(char *name, t_arg **tail)
 	args.args = new;
 }
 
-void		init_args(int ac, char **av)
+void		init_args(char **av)
 {
 	t_arg	*tail;
 
 	tail = NULL;
 	args.args = NULL;
 	args.deleted = NULL;
-	while (ac && *av)
+	while (*av)
 	{
 		push(*av, &tail);
 		av++;

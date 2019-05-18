@@ -58,7 +58,7 @@ struct s_term			terms;
 struct s_args			args;
 struct winsize			window_size;
 
-void					init_args(int ac, char **av);
+void					init_args(char **av);
 void					set_sighandle(void);
 void					reset_term(void);
 void					init_term(void);
